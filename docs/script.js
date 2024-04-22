@@ -1,30 +1,35 @@
-let operands = ["",""],
-    operator = "",
-    operandFlag = false;
+const OPERANDS = {
+    first: 0,
+    second: 1
+};
 
-const display = document.querySelector(".display");
+const operands = ["0","0"];
+let operator = "",
+    currentOperand = OPERANDS.first;
+let resetOnNext = true;
+let isOperatorQueued = false;
+
+const displayText = document.querySelector(".display");
 const buttons = document.querySelector(".buttons");
 
 function add() {
-    return +operands[0] + +operands[1];
+    return +operands[OPERANDS.first] + +operands[OPERANDS.second];
 }
 
 function subtract() {
-    return +operands[0] - +operands[1];
+    return +operands[OPERANDS.first] - +operands[OPERANDS.second];
 }
 
 function multiply() {
-    console.log('enter');
-    return +operands[0] * +operands[1];
+    return +operands[OPERANDS.first] * +operands[OPERANDS.second];
 }
 
 function divide() {
-    return +operands[0] / +operands[1];
+    return +operands[OPERANDS.first] / +operands[OPERANDS.second];
 }
 
 function compute() {
     let result;
-    console.log(operator)
     switch (operator) {
         case '+':
             result = add();
@@ -42,42 +47,85 @@ function compute() {
             error();
             result = 0;
     }
-    operands[1] = '';
-    operands[0] = result;
-    operandFlag = false;
-    display.textContent = result;
-    console.log(result);
+    /* if (result > Number.MAX_SAFE_INTEGER) {
+        result = Number.POSITIVE_INFINITY;
+    } */
+    operands[OPERANDS.first] = result.toString();
+    operands[OPERANDS.second] = '';
+    currentOperand = OPERANDS.first;
+    resetOnNext = true;
+    display();
+}
+
+function del() {
+    if (!isFinite(+operands[currentOperand])) {
+        clear();
+    }
+    else if (!isNaN(+operands[currentOperand]) && operands[currentOperand].includes("e")) {
+        operands[currentOperand] = (+operands[currentOperand] / 10).toString();
+    }
+    else if (!isNaN(+operands[currentOperand])) {
+        operands[currentOperand] = operands[currentOperand].substring(0, operands[currentOperand].length - 1)
+    }
+    display();
 }
 
 function clear() {
     operands[0] = '';
     operands[1] = '';
-    operandFlag = false;
-    display.textContent = '0';
+    currentOperand = OPERANDS.first;
+    display();
+}
+
+function display(text = operands[currentOperand]) {
+    if (text == '') {
+        text = "0";
+        operands[currentOperand] = "0";
+    }
+    else if (text.length > 12) {
+        text = (+text).toExponential(8);
+    }
+    displayText.textContent = text;
 }
 
 function error() {
     clear();
-    display.textContent = "ERROR";
+    display("ERROR");
 }
 
 buttons.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") {
         let button = e.target;
         if (button.className.includes("digit")) {
-            operands[Number(operandFlag)] += button.textContent;
-            display.textContent = operands[Number(operandFlag)];
+            isOperatorQueued = false;
+            if (resetOnNext || operands[currentOperand] === "0") {
+                resetOnNext = false;
+                operands[currentOperand] = button.textContent;
+            } else {
+                operands[currentOperand] += button.textContent;
+            }
+            display();
         }
         else if (button.className.includes("util")) {
+            isOperatorQueued = false;
             parseUtils(button.textContent);
         }
         else if (button.className.includes("operator")) {
             operator = button.textContent;
-            if (operandFlag) {
+            if (isOperatorQueued) {
+                isOperatorQueued = false;
+                operands[OPERANDS.second] = operands[OPERANDS.first]
+                compute();
+            }
+            else if (currentOperand === OPERANDS.second) {
                 compute();
             } else {
-                operandFlag = true;
+                currentOperand = OPERANDS.second;
             }
+            isOperatorQueued = true;
+        }
+        else {
+            error();
         }
     }
 });
@@ -85,7 +133,17 @@ buttons.addEventListener("click", (e) => {
 function parseUtils(util) {
     switch (util) {
         case '=':
-            compute();
+            if (currentOperand === OPERANDS.second)
+                compute();
+        break;
+        case '.':
+            if (!operands[currentOperand].includes(".")) {
+                operands[currentOperand] += ".";
+                display();
+            }
+        break;
+        case 'C':
+            del();
         break;
         case 'AC':
             clear();
