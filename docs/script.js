@@ -62,7 +62,7 @@ function del() {
         operands[currentOperand] = (+operands[currentOperand] / 10).toString();
     }
     else if (!isNaN(+operands[currentOperand])) {
-        operands[currentOperand] = operands[currentOperand].substring(0, operands[currentOperand].length - 1)
+        operands[currentOperand] = operands[currentOperand].slice(0, -1)
     }
     display();
 }
@@ -140,6 +140,18 @@ function parseUtils(util) {
                 operands[currentOperand] += ".";
                 display();
             }
+        break;
+        case '±':
+            if (!(operands[currentOperand] === "0")) {
+                console.log('enter')
+                if (!operands[currentOperand].includes("-")) {
+                    operands[currentOperand] = "-" + operands[currentOperand];
+                }
+                else {
+                    operands[currentOperand] = operands[currentOperand].slice(1);
+                }
+            }
+            display();
         break;
         case 'C':
             del();
