@@ -143,7 +143,6 @@ function parseUtils(util) {
         break;
         case '±':
             if (!(operands[currentOperand] === "0")) {
-                console.log('enter')
                 if (!operands[currentOperand].includes("-")) {
                     operands[currentOperand] = "-" + operands[currentOperand];
                 }
