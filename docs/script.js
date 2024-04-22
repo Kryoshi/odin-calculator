@@ -6,7 +6,7 @@ const OPERANDS = {
 const operands = ["0","0"];
 let operator = "",
     currentOperand = OPERANDS.first;
-let resetOnNext = true;
+let resetOnNext = false;
 let isOperatorQueued = false;
 
 const displayText = document.querySelector(".display");
@@ -47,9 +47,6 @@ function compute() {
             error();
             result = 0;
     }
-    /* if (result > Number.MAX_SAFE_INTEGER) {
-        result = Number.POSITIVE_INFINITY;
-    } */
     operands[OPERANDS.first] = result.toString();
     operands[OPERANDS.second] = '';
     currentOperand = OPERANDS.first;
@@ -74,6 +71,8 @@ function clear() {
     operands[0] = '';
     operands[1] = '';
     currentOperand = OPERANDS.first;
+    resetOnNext = false;
+    isOperatorQueued = false;
     display();
 }
 
