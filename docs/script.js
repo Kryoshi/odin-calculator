@@ -107,6 +107,9 @@ function updateDisplayQueue() {
     } else if (currentOperand === OPERANDS.second) {
         text = `${operands[OPERANDS.first]} ${operator}`;
     }
+    if (text.length > 12) {
+        text = (+text).toExponential(8);
+    }
     displayQueue.textContent = text;
 }
 
