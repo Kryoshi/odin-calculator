@@ -1,28 +1,28 @@
 
 @font-face {
     font-family: "LCDMono";
-    src: url(../fonts/LCDMonoWinWoff2/LCDML___.woff2) format("woff2");
+    src: url(./fonts/LCDML___.woff2) format("woff2");
     font-weight: lighter;
     font-style: normal;
 }
 
 @font-face {
     font-family: "LCDMono";
-    src: url(../fonts/LCDMonoWinWoff2/LCDMN___.woff2) format("woff2");
+    src: url(./fonts/LCDMN___.woff2) format("woff2");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "LCDMono";
-    src: url(../fonts/LCDMonoWinWoff2/LCDMB___.woff2) format("woff2");
+    src: url(./fonts/LCDMB___.woff2) format("woff2");
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: "LCDMono";
-    src: url(../fonts/LCDMonoWinWoff2/LCDMU___.woff2) format("woff2");
+    src: url(./fonts/LCDMU___.woff2) format("woff2");
     font-weight: bolder;
     font-style: normal;
 }
