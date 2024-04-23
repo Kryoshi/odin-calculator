@@ -85,7 +85,7 @@ function clear() {
 }
 
 function display(text = operands[currentOperand]) {
-    if (text == '') {
+    if (text == "") {
         text = "0";
         operands[currentOperand] = "0";
     }
@@ -112,6 +112,9 @@ function updateDisplayQueue(text = "") {
 }
 
 function trimNumber(numberString, digits = 8) {
+    if (numberString.match(/\d[\.]$/)) {
+        numberString += "0";
+    }
     if (numberString.length > 12) {
         numberString = (+numberString).toExponential(digits);
     }return numberString;
