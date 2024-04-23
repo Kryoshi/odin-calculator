@@ -1,5 +1,35 @@
+
+@font-face {
+    font-family: "LCDMono";
+    src: url(../fonts/LCDMonoWinWoff2/LCDML___.woff2) format("woff2");
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "LCDMono";
+    src: url(../fonts/LCDMonoWinWoff2/LCDMN___.woff2) format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "LCDMono";
+    src: url(../fonts/LCDMonoWinWoff2/LCDMB___.woff2) format("woff2");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "LCDMono";
+    src: url(../fonts/LCDMonoWinWoff2/LCDMU___.woff2) format("woff2");
+    font-weight: bolder;
+    font-style: normal;
+}
+
+
 body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'LCDMono', 'Courier New', Courier, monospace;
     padding: 0;
     display: flex;
     flex-direction: column;
