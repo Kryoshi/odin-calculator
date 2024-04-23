@@ -48,10 +48,12 @@ function compute() {
             result = 0;
     }
     operands[OPERANDS.first] = result.toString();
-    operands[OPERANDS.second] = '';
-    currentOperand = OPERANDS.first;
+    operands[OPERANDS.second] = "0";
     resetOnNext = true;
+    console.log(result)
+    currentOperand = OPERANDS.first;
     display();
+    currentOperand = OPERANDS.second;
 }
 
 function del() {
@@ -68,8 +70,8 @@ function del() {
 }
 
 function clear() {
-    operands[0] = '';
-    operands[1] = '';
+    operands[0] = "0";
+    operands[1] = "0";
     currentOperand = OPERANDS.first;
     resetOnNext = false;
     isOperatorQueued = false;
@@ -98,7 +100,10 @@ buttons.addEventListener("click", (e) => {
         if (button.className.includes("digit")) {
             isOperatorQueued = false;
             if (resetOnNext || operands[currentOperand] === "0") {
-                resetOnNext = false;
+                if(resetOnNext) {
+                    resetOnNext = false;
+                    clear();
+                }
                 operands[currentOperand] = button.textContent;
             } else {
                 operands[currentOperand] += button.textContent;
@@ -110,7 +115,6 @@ buttons.addEventListener("click", (e) => {
             parseUtils(button.textContent);
         }
         else if (button.className.includes("operator")) {
-            operator = button.textContent;
             if (isOperatorQueued) {
                 isOperatorQueued = false;
                 operands[OPERANDS.second] = operands[OPERANDS.first]
@@ -118,14 +122,18 @@ buttons.addEventListener("click", (e) => {
             }
             else if (currentOperand === OPERANDS.second) {
                 compute();
-            } else {
+            }
+            else {
                 currentOperand = OPERANDS.second;
             }
+            resetOnNext = false;
             isOperatorQueued = true;
+            operator = button.textContent;
         }
         else {
             error();
         }
+        console.log(button.className + ` ${operands[OPERANDS.first]} ${operands[OPERANDS.second]}\noperand: ${currentOperand}`)
     }
 });
 
