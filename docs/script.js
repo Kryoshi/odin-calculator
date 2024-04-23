@@ -54,7 +54,6 @@ function compute() {
     operands[OPERANDS.first] = result.toString();
     operands[OPERANDS.second] = "0";
     resetOnNext = true;
-    console.log(result)
     display(operands[OPERANDS.first]);
     currentOperand = OPERANDS.second;
 }
