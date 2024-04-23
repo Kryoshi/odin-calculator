@@ -81,6 +81,7 @@ function clear() {
     resetOnNext = false;
     isOperatorQueued = false;
     display();
+    updateDisplayQueue("clear")
 }
 
 function display(text = operands[currentOperand]) {
@@ -95,8 +96,11 @@ function display(text = operands[currentOperand]) {
     updateDisplayQueue();
 }
 
-function updateDisplayQueue() {
-    let text
+function updateDisplayQueue(text = "") {
+    if (text === "clear") {
+        displayQueue.textContent = "";
+        return;
+    }
     if (resetOnNext) {
         text = `${operandsOld[OPERANDS.first]} ${operator} ${operandsOld[OPERANDS.second]}
          = ${operands[OPERANDS.first]}`;
