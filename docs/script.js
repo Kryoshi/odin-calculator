@@ -156,7 +156,6 @@ buttons.addEventListener("click", (e) => {
         else {
             error();
         }
-        console.log(button.className + ` ${operands[OPERANDS.first]} ${operands[OPERANDS.second]}\noperand: ${currentOperand}`)
     }
 });
 
