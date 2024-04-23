@@ -4,6 +4,7 @@ const OPERANDS = {
 };
 
 const operands = ["0","0"];
+const operandsOld = ["0","0"];
 let operator = "",
     currentOperand = OPERANDS.first;
 let resetOnNext = false;
@@ -48,12 +49,13 @@ function compute() {
             error();
             result = 0;
     }
+    operandsOld[OPERANDS.first] = operands[OPERANDS.first];
+    operandsOld[OPERANDS.second] = operands[OPERANDS.second];
     operands[OPERANDS.first] = result.toString();
     operands[OPERANDS.second] = "0";
     resetOnNext = true;
     console.log(result)
-    currentOperand = OPERANDS.first;
-    display();
+    display(operands[OPERANDS.first]);
     currentOperand = OPERANDS.second;
 }
 
@@ -71,8 +73,10 @@ function del() {
 }
 
 function clear() {
-    operands[0] = "0";
-    operands[1] = "0";
+    operands[OPERANDS.first] = "0";
+    operands[OPERANDS.second] = "0";
+    operandsOld[OPERANDS.first] = "0";
+    operandsOld[OPERANDS.second] = "0";
     currentOperand = OPERANDS.first;
     resetOnNext = false;
     isOperatorQueued = false;
@@ -88,6 +92,22 @@ function display(text = operands[currentOperand]) {
         text = (+text).toExponential(8);
     }
     displayMain.textContent = text;
+    updateDisplayQueue();
+}
+
+function updateDisplayQueue() {
+    let text
+    if (resetOnNext) {
+        text = `${operandsOld[OPERANDS.first]} ${operator} ${operandsOld[OPERANDS.second]}
+         = ${operands[OPERANDS.first]}`;
+    } else if (currentOperand === OPERANDS.first && operands[OPERANDS.first] != "0") {
+        text = `${operands[OPERANDS.first]}`;
+    } else if (currentOperand === OPERANDS.second && operands[OPERANDS.second] != "0") {
+        text = `${operands[OPERANDS.first]} ${operator} ${operands[OPERANDS.second]}`;
+    } else if (currentOperand === OPERANDS.second) {
+        text = `${operands[OPERANDS.first]} ${operator}`;
+    }
+    displayQueue.textContent = text;
 }
 
 function error() {
@@ -114,6 +134,7 @@ buttons.addEventListener("click", (e) => {
         else if (button.className.includes("util")) {
             isOperatorQueued = false;
             parseUtils(button.textContent);
+            updateDisplayQueue()
         }
         else if (button.className.includes("operator")) {
             if (isOperatorQueued) {
@@ -130,6 +151,7 @@ buttons.addEventListener("click", (e) => {
             resetOnNext = false;
             isOperatorQueued = true;
             operator = button.textContent;
+            updateDisplayQueue()
         }
         else {
             error();
