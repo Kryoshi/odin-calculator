@@ -9,7 +9,8 @@ let operator = "",
 let resetOnNext = false;
 let isOperatorQueued = false;
 
-const displayText = document.querySelector(".display");
+const displayMain = document.querySelector(".display .main");
+const displayQueue = document.querySelector(".display .queue");
 const buttons = document.querySelector(".buttons");
 
 function add() {
@@ -86,7 +87,7 @@ function display(text = operands[currentOperand]) {
     else if (text.length > 12) {
         text = (+text).toExponential(8);
     }
-    displayText.textContent = text;
+    displayMain.textContent = text;
 }
 
 function error() {

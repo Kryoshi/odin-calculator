@@ -26,23 +26,45 @@ body {
 }
 
 .display {
-    font-size: 6vh;
-    font-weight: bold;
-
     box-sizing: border-box;
     height: 20%;
     width: 98%;
 
     background-color: aliceblue;
-    color: #202020;
 
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
     border-radius: 4vh 4vh 2vh 2vh;
     padding: 2vh;
     box-shadow: inset -0.3vh 0.5vh;
 }
+
+.main {
+    box-sizing: border-box;
+    font-size: 6vh;
+    font-weight: bold;
+
+    color: #202020;
+
+    align-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.queue {
+    box-sizing: border-box;
+    font-size: 2vh;
+
+    color: #707070;
+    
+    align-self: flex-start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 button {
     font-size: 48px;
     font-weight: bold;
