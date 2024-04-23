@@ -89,10 +89,7 @@ function display(text = operands[currentOperand]) {
         text = "0";
         operands[currentOperand] = "0";
     }
-    else if (text.length > 12) {
-        text = (+text).toExponential(8);
-    }
-    displayMain.textContent = text;
+    displayMain.textContent = trimNumber(text);
     updateDisplayQueue();
 }
 
@@ -102,19 +99,23 @@ function updateDisplayQueue(text = "") {
         return;
     }
     if (resetOnNext) {
-        text = `${operandsOld[OPERANDS.first]} ${operator} ${operandsOld[OPERANDS.second]}
-         = ${operands[OPERANDS.first]}`;
+        text = `${trimNumber(operandsOld[OPERANDS.first], 5)} ${operator} ${trimNumber(operandsOld[OPERANDS.second], 5)}
+         = ${trimNumber(operands[OPERANDS.first], 5)}`;
     } else if (currentOperand === OPERANDS.first && operands[OPERANDS.first] != "0") {
-        text = `${operands[OPERANDS.first]}`;
+        text = `${trimNumber(operands[OPERANDS.first])}`;
     } else if (currentOperand === OPERANDS.second && operands[OPERANDS.second] != "0") {
-        text = `${operands[OPERANDS.first]} ${operator} ${operands[OPERANDS.second]}`;
+        text = `${trimNumber(operands[OPERANDS.first])} ${operator} ${trimNumber(operands[OPERANDS.second])}`;
     } else if (currentOperand === OPERANDS.second) {
-        text = `${operands[OPERANDS.first]} ${operator}`;
-    }
-    if (text.length > 12) {
-        text = (+text).toExponential(8);
+        text = `${trimNumber(operands[OPERANDS.first])} ${operator}`;
     }
     displayQueue.textContent = text;
+}
+
+function trimNumber(numberString, digits = 8) {
+    if (numberString.length > 12) {
+        numberString = (+numberString).toExponential(digits);
+    }return numberString;
+
 }
 
 function error() {
