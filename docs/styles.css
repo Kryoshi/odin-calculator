@@ -29,7 +29,7 @@
 
 
 body {
-    font-family: 'LCDMono', 'Courier New', Courier, monospace;
+    font-family: 'LCDMono', 'Courier New', Courier, Arial, Helvetica, sans-serif, system-ui;
     padding: 0;
     display: flex;
     flex-direction: column;
